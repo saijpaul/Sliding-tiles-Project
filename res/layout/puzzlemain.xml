@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Author: Seema Saijpaul, Pratibha Natani, Neeraja Budamagunta, Maxwell A. Garvey
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/back" android:layout_height="fill_parent"
+    android:layout_width="fill_parent" android:padding="30dip"
+    android:orientation="horizontal">
+<LinearLayout android:orientation="vertical"
+        android:layout_height="wrap_content" android:layout_width="fill_parent"
+        android:layout_gravity="bottom">
+   
+   <TableRow android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/tableRow1" android:gravity="bottom"> 
+   	<ImageView
+  	  android:id="@+id/imageEquation"
+	  android:layout_width="150dip"
+	  android:layout_height="100dip"  android:paddingLeft="10dip"  android:src="@drawable/equationbutton" android:layout_gravity="bottom"/>
+
+	<ImageView
+  	  android:id="@+id/imagePuzzle"
+	  android:layout_width="100dip"
+	  android:layout_height="75dip"  android:paddingLeft="10dip"  android:src="@drawable/puzzlebutton"/>
+	</TableRow>
+	<TableRow android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_marginLeft="50dip" 
+	android:id="@+id/tableRow2" android:gravity="bottom"> 
+   	<ImageView
+  	  android:id="@+id/imageHelp"
+	  android:layout_width="75dip"
+	  android:layout_height="75dip"  android:paddingLeft="10dip"  android:src="@drawable/helpbutton" />
+
+	<ImageView
+  	  android:id="@+id/imageExit"
+	  android:layout_width="75dip"
+	  android:layout_height="75dip"  android:paddingLeft="10dip"  android:src="@drawable/exitbutton"/>
+	</TableRow>
+</LinearLayout>
+</LinearLayout>
