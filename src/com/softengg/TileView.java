@@ -1,18 +1,12 @@
-/********************************************************************************
-* Authors: Seema Saijpaul, Pratibha Natani, Neeraja Budamagunta, Maxwell A. Garvey
-*********************************************************************************/
-
 package com.softengg;
 
 import java.util.Random;
 
 import android.content.Context;
-//import android.content.SharedPreferences;
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Typeface;
-//import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -23,7 +17,6 @@ public class TileView extends View {
         public static final int MOVE_LEFT = 2;
         public static final int MOVE_RIGHT = 3;
 
-        
         private static final int SHADOW_RADIUS = 1;
         
         //Offset of tile from top left corner of cell
@@ -46,21 +39,25 @@ public class TileView extends View {
         
     public TileView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        
         init();
     }
-    
-    public TileView(Context context) {
+   
+        public TileView(Context context) {
                 super(context);
+                
                 init();
-     }
+        }
         
         private void init() {
             setFocusable(true);
-            Context context = getContext();           
+            Context context = getContext();
+              
             tPaint = new Paint();
             tPaint.setTextAlign(Paint.Align.CENTER);
+                
         }
-
+        
     @Override 
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -75,80 +72,237 @@ public class TileView extends View {
 
     }
  
-        public void newGame(Tile[] tiles, int gridsize) {
+private void fillValue(int value)
+{
+	Random r = new Random();
+	int rand3 = r.nextInt(tSizeSqr-1);
+	while (tTiles[rand3].mNumber != 0)
+	{
+		rand3 = r.nextInt(tSizeSqr-1);
+	}
+	tTiles[rand3].mNumber = value;	
+}
+ 
+private void fillAddEquation()
+{
+	Random r = new Random();
+	
+	int rand1 = r.nextInt(7) + 1;
+	int rand2 = r.nextInt((8-rand1))+1;
+		
+	// Equation rand1 + rand2 = sum
+	fillValue(rand1);
+	fillValue(rand2);
+	fillValue(40); // + operator
+	fillValue(20); // = operator
+	fillValue((rand1+rand2));
+	
+	System.out.println("Eq is"+ rand1 + "+" + rand2 + "="+ (rand1+rand2));
+}
+	
+
+private void fillSubEquation()
+{
+	Random r = new Random();
+	
+	int rand1 = r.nextInt(5) + 5;
+	int rand2 = r.nextInt(5)+1;
+		
+	// Equation rand1 - rand2 = sub
+	fillValue(rand1);
+	fillValue(rand2);
+	fillValue(50); // - operator
+	fillValue(20); // = operator
+	fillValue((rand1-rand2));
+	
+	System.out.println("Eq is"+ rand1 + "-" + rand2 + "="+ (rand1-rand2));
+}
+private void fillMulEquation()
+{
+	Random r = new Random();
+	
+	int rand1 = r.nextInt(3)+1;
+	int rand2=0;
+	
+	if (rand1 == 1)
+	{
+		rand2 = r.nextInt(9)+1; 
+	}
+	else if (rand1 == 2)
+	{
+		rand2 = r.nextInt(4)+1;
+	}
+	else if (rand1 == 3)
+	{
+		rand2 = r.nextInt(3)+1;
+	}
+	 		
+	// Equation rand1 * rand2 = mul
+	fillValue(rand1);
+	fillValue(rand2);
+	fillValue(60); // * operator
+	fillValue(20); // = operator
+	fillValue((rand1*rand2));
+	
+	System.out.println("Eq is"+ rand1 + "*" + rand2 + "="+ (rand1*rand2));
+	
+}
+
+private void fillRandomVals(int op, int count)
+{
+	Random r = new Random();
+	int a=0;
+	int rq=0;
+	if (op == 1)
+	{
+		for (a=0;a<count;a++)
+		{
+			rq = r.nextInt(8)+1;
+			fillValue(rq);
+		}
+	}
+	else if (op == 2)
+	{
+		for (a=0;a<count;a++)
+		{
+			// Filling value 40, 50, or 60
+			rq = ((r.nextInt(3)+1)*10)+30;
+			fillValue(rq);
+		}
+	}
+	else 
+	{
+		// Equal to "=" value:20
+		for (a=0;a<count;a++)
+		{
+			fillValue(20);
+		}
+	}
+}
+ public void newGame(Tile[] tiles,int gridsize) {
        
         isSelected = -1; //nothing selected to start
-       
-        //hardcoding for grid size = 5*5
-        	tSize = gridsize;
-        	//for 25 tiles
-            tSizeSqr = tSize * tSize;
-
-            // Init array of tiles
-            Random random = new Random();
-            
-            tTiles = new Tile[tSizeSqr];
-            for (int i = 0; i < tSizeSqr; ++i) {
-                tTiles[i] = new Tile(i, random.nextInt() | 0xff000000);
-            	//tTiles[i] = new Tile(i, 0xffffffff);
-            }
-
-            emptyIndex = tSizeSqr -1 ;
-            tTiles[emptyIndex] = null;
-   
-        } 
+        tSize = gridsize;
+        tSizeSqr = tSize * tSize;
+        int eq_size = (tSizeSqr / tSize)- 1 ;
         
-         
+
+        // Init array of tiles
+        Random random = new Random();
+        
+        tTiles = new Tile[tSizeSqr];
+        for (int i = 0; i < tSizeSqr; ++i) {
+ //tTiles[i] = new Tile(i, random.nextInt() | 0xff000000);
+                    tTiles[i] = new Tile();
+        }
+        
+        int randFunc = random.nextInt(3);
+        
+    	for (int k=0;k<(randFunc+1);k++)
+    	{
+           	int radVal = random.nextInt(3)+1;
+        	
+        	switch(radVal)
+        	{
+	        	case 1: { fillAddEquation();break;}
+	        	case 2: { fillSubEquation(); break;}
+	        	case 3: { fillMulEquation();break;}
+        	}
+       	}
+    	fillRandomVals(1,(9-(2*randFunc))); // number
+    	fillRandomVals(2,(6-(2*randFunc))); // operator
+    	fillRandomVals(3,(3-randFunc)); // equal to
+        
+        emptyIndex = tSizeSqr -1 ;
+
+        tTiles[emptyIndex] = null;
+        
+        // Mix up puzzle with valid moves only
+        for (int i = 0; i < 100*tSize; ++i) {
+            move(random.nextInt(5));
+        }
+ 
+        
+
+    } 
+        
+        
+        
             
         private float getTileWidth() {
                 return getWidth() / tSize;
         }
         
         private float getTileHeight() {
-                return getHeight() / tSize;
+                //return getHeight() / tSize;
+                  return getWidth()/tSize;
         }
-                
+            
+
     @Override
     protected void onDraw(Canvas canvas) {
         
-                float tileWidth = getTileWidth();
-                float tileHeight = getTileHeight();
+        float tileWidth = getTileWidth();
+        float tileHeight = getTileHeight();
                                                 
         for (int index = 0; index < tSizeSqr; ++index) {
-                        int i = index / tSize;
-                        int j = index % tSize;
-                        float x = tileWidth * j;
-                        float y = tileHeight * i;
+                    int i = index / tSize;
+                    int j = index % tSize;
+                    float x = tileWidth * j;
+                    float y = tileHeight * i;
 
-                        // if this is the empty cell do nothing                 
-                        if (tTiles[index] == null) {
-                                continue;
-                        }
-                                        
-                        if(isSelected != -1) {
-                                int min = Math.min(isSelected, emptyIndex);
-                                int max = Math.max(isSelected, emptyIndex);
-                                int minX = min % tSize;
-                                int minY = min / tSize;
-                                int maxX = max % tSize;
-                                int maxY = max / tSize;
-                                
-                                if (i >= minY && i <= maxY && j == minX) {
-                                        y += offsetX;
-                                }
-                                if (j >= minX && j <= maxX && i == minY) {
-                                        x += offsetX;
-                                }
+                    // if this is the empty cell do nothing                 
+                    if (tTiles[index] == null) {
+                            continue;
+                    }
+                                    
+                    if(isSelected != -1) {
+                            int min = Math.min(isSelected, emptyIndex);
+                            int max = Math.max(isSelected, emptyIndex);
+                            int minX = min % tSize;
+                            int minY = min / tSize;
+                            int maxX = max % tSize;
+                            int maxY = max / tSize;
+                            
+                            if (i >= minY && i <= maxY && j == minX) {
+                                    y += offsetY;
+                            }
+                            if (j >= minX && j <= maxX && i == minY) {
+                                    x += offsetX;
+                            }
                         }
                         
-                 tPaint.setColor(Color.CYAN);
-                
+                tPaint.setColor(Color.CYAN);
                 canvas.drawRect(x, y, x + tileWidth, y + tileHeight, tPaint);
-                        
+                tPaint.setColor(Color.BLACK);
+                tPaint.setTextSize(20);
+                
+                switch (tTiles[index].mNumber)
+                {
+	                case 1 :
+	                case 2 :
+	                case 3 :
+	                case 4 :
+	                case 5 :
+	                case 6 :
+	                case 7 :
+	                case 8 :
+	                case 9 :
+	                		  {canvas.drawText(String.valueOf(tTiles[index].mNumber), x+30, y+40, tPaint);
+	                			break;}
+	                case 20 : {canvas.drawText("=" , x+30, y+40, tPaint); break;}
+	                case 40 : {canvas.drawText("+" , x+30, y+40, tPaint); break;}
+	                case 50 : {canvas.drawText("-" , x+30, y+40, tPaint); break;}
+	                case 60 : {canvas.drawText("*" , x+30, y+40, tPaint); break;}
+	                default : {canvas.drawText("1" , x+30, y+40, tPaint); break;} 
+                }
+                                
             //Drop shadow to make numbers and borders stand out
             tPaint.setShadowLayer(SHADOW_RADIUS, 1, 1, 0xff000000);
             
+          
             //Draw the outline
+            //if (mShowOutlines) {
                 float x2 = x + tileWidth-1;
                 float y2 = y + tileHeight-1;
                 float lines[] = {
@@ -157,14 +311,15 @@ public class TileView extends View {
                     x2, y, x2, y2,
                     x, y2, x2, y2
                 };
-                //tPaint.setColor(Color.RED);
+          //      tPaint.setColor(mOutlineColor);
                 canvas.drawLines(lines, tPaint);
-        
+            //}
             
             // remove shadow layer for perfomance
             tPaint.setShadowLayer(0, 0, 0, 0);
         }
     }
+            
     private int getCellIndex(float x, float y) {
         float tileWidth = getTileWidth();
                 float tileHeight = getTileHeight();
@@ -200,6 +355,47 @@ public class TileView extends View {
         return (index / tSize == emptyIndex / tSize || index % tSize == emptyIndex % tSize) &&
                 index != emptyIndex;
     }
+    
+    public boolean move(int dir) {
+        
+        if (isSelected >= 0) {
+            return false;
+        }
+        
+        int index;
+        switch(dir) {
+                case MOVE_UP:
+                        index = emptyIndex + tSize;
+                        if ((index) < tSizeSqr) {
+                                update(index);
+                                return true;
+                        }
+                        return false;
+                case MOVE_DOWN:
+                        index = emptyIndex - tSize;
+                        if ((index) >= 0) {
+                                update(index);
+                                return true;
+                        }
+                        return false;
+                case MOVE_LEFT:
+                        index = emptyIndex + 1;
+                        if ((index % tSize) != 0 ) {
+                                update(index);
+                                return true;
+                        }
+                        return false;
+                case MOVE_RIGHT:
+                        index = emptyIndex - 1;
+                        if ((emptyIndex % tSize) != 0) {
+                                update(index);
+                                return true;
+                        }
+                        return false;
+        }
+        return false;
+    }
+    
     private void redrawRow() {
         int h = (int)getTileHeight();
         int tileY = h * (emptyIndex / tSize);
@@ -241,7 +437,7 @@ public class TileView extends View {
                 }                       
                 }
             redrawColumn();
-        }    
+        }       
     }
     
     public void pickTile(float x, float y) {        
@@ -326,5 +522,6 @@ public class TileView extends View {
       public Tile[] getTiles() {
         return tTiles;
     }
- 
+    
+   
 }

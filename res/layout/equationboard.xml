@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
-Author: Seema Saijpaul, Pratibha Natani, Neeraja Budamagunta, Maxwell A. Garvey
--->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
-				android:id="@+id/layout" android:layout_width="fill_parent" android:orientation="vertical" 
-				android:layout_height="fill_parent"
-				android:background="@color/background">
-<RelativeLayout android:id="@+id/headerLayout" android:layout_height="wrap_content" android:background="@drawable/header" 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:qwad="http://schemas.android.com/apk/res/com.softengg"
+    android:id="@+id/layout"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/background">
+    
+ <RelativeLayout android:id="@+id/headerLayout" android:layout_height="wrap_content" android:background="@drawable/header" 
 				android:padding="8dip" android:paddingBottom="8dip" android:paddingLeft="8dip" android:paddingRight="8dip" 
 				android:paddingTop="8dip" android:layout_width="wrap_content" android:layout_alignParentTop="true">
-	 <ImageView
+	<ImageView
   	  android:id="@+id/imageHome"
 	  android:layout_width="50dip"
 	  android:layout_height="50dip"  android:src="@drawable/home" android:layout_alignParentRight="true" />
 
-</RelativeLayout> 
-<!--  added for tile generation --> 
+</RelativeLayout>
+ 
+               
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
@@ -24,11 +26,14 @@ Author: Seema Saijpaul, Pratibha Natani, Neeraja Budamagunta, Maxwell A. Garvey
             android:id="@+id/tile_view"
             android:layout_width="fill_parent" 
             android:layout_height="fill_parent"
-
+            
             android:focusableInTouchMode="true"/>
 
     </FrameLayout>
-<!--  change end  for tile generation --> 
-
-
+    
+ <RelativeLayout android:id="@+id/footerLayout" android:layout_height="wrap_content" android:background="@drawable/header" 
+				android:padding="8dip" android:paddingBottom="8dip" android:paddingLeft="8dip" android:paddingRight="8dip" 
+				android:paddingTop="8dip" android:layout_width="wrap_content" android:layout_alignParentTop="true">
+</RelativeLayout>
+    
 </LinearLayout>
