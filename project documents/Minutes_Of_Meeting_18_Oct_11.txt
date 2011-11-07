@@ -1,0 +1,28 @@
+Minutes of Meeting(First Meeting with Client)
+
+Date of Meeting: 18th Oct 2011
+
+Attendes:Seema Saijpaul, Neeraja Budamagunta, Pratibha Natani
+
+Purpose:Understand the requirements of the project(Sliding Tiles)
+
+Summary:
+
+Client explained the requirements of the Project:
+
+- Requires creation of 2 modes in game.
+- First mode is one player game and Second mode is two player game with AI being the other player.
+- Project is developed for kids so UI should be designed with kids in mind.
+
+
+Other Clarifications:
+
+- Non-functional requirements such as game should be able to adjust its length and width if the phone is held horizontal rather than vertical should be satisfied.
+
+
+Expectation from Iteration 1:
+
+- Intial Menu screen to go to Mode 1 or Mode 2 game.
+- Mode 1 game should display 5*5 grid with sliding tiles functionality implemented.
+
+ 

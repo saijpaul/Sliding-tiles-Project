@@ -1,0 +1,27 @@
+Minutes of Meeting(Second Meeting with Client)
+
+Date of Meeting: 1st Nov 2011
+
+Attendes:Seema Saijpaul, Neeraja Budamagunta, Pratibha Natani,          Maxwell Garvey
+
+Purpose:Understand the customer feedback points and clarifications on questions on functionality
+
+Summary:
+
+1. Change the proportion of the tile width/height. Make square tiles rather than rectangle.
+
+2. Change the buttons on the welcome screen for Play modes. Make them more apparent on the background.
+
+3. Remove the exit button from the home page.
+
+Other Clarifications:
+
+- Can use MotionEvent to capture the selection of tile which user wants to check if it makes a valid equation or not.
+- can generate equations in code and then throw them on board randomly.
+
+
+Expectation from Iteration 2:
+
+- Basic functionality of random board generation with ability to select the equation, validate the equation and update the score if correct eqation formed.
+
+ 
