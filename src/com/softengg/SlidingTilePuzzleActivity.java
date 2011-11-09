@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 public class SlidingTilePuzzleActivity extends Activity {
@@ -17,7 +18,7 @@ public class SlidingTilePuzzleActivity extends Activity {
 	private ImageView imageEquationMode = null;
 	private ImageView imagePuzzleMode = null;
 	private ImageView imageHelp = null;
-	private ImageView imageExit = null;
+
 	
     /** Called when the activity is first created. */
     @Override
@@ -30,12 +31,12 @@ public class SlidingTilePuzzleActivity extends Activity {
         this.imageEquationMode = (ImageView) this.findViewById(R.id.imageEquation);        
         this.imagePuzzleMode = (ImageView) this.findViewById(R.id.imagePuzzle);
         this.imageHelp = (ImageView) this.findViewById(R.id.imageHelp);
-        this.imageExit = (ImageView) this.findViewById(R.id.imageExit);
+
         //set listener on click event of above icons
         imageEquationMode.setOnClickListener(myListener);
         imagePuzzleMode.setOnClickListener(myListener);
         imageHelp.setOnClickListener(myListener);
-        imageExit.setOnClickListener(myListener);
+
     }
     
     View.OnClickListener myListener = new View.OnClickListener(){
@@ -51,10 +52,6 @@ public class SlidingTilePuzzleActivity extends Activity {
 	    	case R.id.imagePuzzle:
 	    		
 	    	break;
-	    	case R.id.imageExit:
-	    	
-	    		finish();	
-		    break;
 		    //setup the help 
 	    	case R.id.imageHelp:
 	            // prepare the alert box

@@ -1,12 +1,20 @@
 package com.softengg;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
+import java.util.Set;
+import java.util.TreeSet;
 
 import android.content.Context;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -18,7 +26,7 @@ public class TileView extends View {
         public static final int MOVE_RIGHT = 3;
 
         private static final int SHADOW_RADIUS = 1;
-        
+        private HashMap hequationvalue = new HashMap();
         //Offset of tile from top left corner of cell
         float offsetX;
         float offsetY;
@@ -32,10 +40,17 @@ public class TileView extends View {
         int tSize;
         int tSizeSqr;
         Tile tTiles[];
+//        int startIndex[] = new int[2];
+//        int recx=0;
+//        int recy=0;
+//        int recx1=0;
+//        int recy1=0;
+//        int header = 80;
+//        int footer = 400;
         
         Paint tPaint;
         
-       
+//       String colorChange = null;
         
     public TileView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -55,6 +70,8 @@ public class TileView extends View {
               
             tPaint = new Paint();
             tPaint.setTextAlign(Paint.Align.CENTER);
+//            startIndex[0]=0;
+//            startIndex[1]=0;
                 
         }
         
@@ -244,8 +261,8 @@ private void fillRandomVals(int op, int count)
         
         float tileWidth = getTileWidth();
         float tileHeight = getTileHeight();
-                                                
-        for (int index = 0; index < tSizeSqr; ++index) {
+        
+    	        for (int index = 0; index < tSizeSqr; ++index) {
                     int i = index / tSize;
                     int j = index % tSize;
                     float x = tileWidth * j;
@@ -274,8 +291,10 @@ private void fillRandomVals(int op, int count)
                         
                 tPaint.setColor(Color.CYAN);
                 canvas.drawRect(x, y, x + tileWidth, y + tileHeight, tPaint);
-                tPaint.setColor(Color.BLACK);
+                tPaint.setColor(Color.BLACK);	
+                
                 tPaint.setTextSize(20);
+                tPaint.setTypeface(Typeface.MONOSPACE);
                 
                 switch (tTiles[index].mNumber)
                 {
@@ -294,7 +313,9 @@ private void fillRandomVals(int op, int count)
 	                case 40 : {canvas.drawText("+" , x+30, y+40, tPaint); break;}
 	                case 50 : {canvas.drawText("-" , x+30, y+40, tPaint); break;}
 	                case 60 : {canvas.drawText("*" , x+30, y+40, tPaint); break;}
-	                default : {canvas.drawText("1" , x+30, y+40, tPaint); break;} 
+	                default : {
+	                		canvas.drawText("1" , x+30, y+40, tPaint); 
+	                		tTiles[index].mNumber= 1; break;} 
                 }
                                 
             //Drop shadow to make numbers and borders stand out
@@ -318,6 +339,7 @@ private void fillRandomVals(int op, int count)
             // remove shadow layer for perfomance
             tPaint.setShadowLayer(0, 0, 0, 0);
         }
+    
     }
             
     private int getCellIndex(float x, float y) {
@@ -440,8 +462,10 @@ private void fillRandomVals(int op, int count)
         }       
     }
     
-    public void pickTile(float x, float y) {        
+    public void pickTile(float x, float y) {   
+    	System.out.println("here reached again"+x+y);
         int index = getCellIndex(x, y);
+    //    System.out.println("here reached again index number"+tTiles[index].mNumber);
         isSelected = isSelectable(index) ? index : -1;
         
         //set coordinates to the upper left corner of the selected tile
@@ -449,6 +473,10 @@ private void fillRandomVals(int op, int count)
         mY = y;
         offsetX = 0;
         offsetY = 0;
+        
+//        startIndex[0] = index;
+//        startIndex[1] = index;
+//        
         
     }
     
@@ -468,7 +496,210 @@ private void fillRandomVals(int op, int count)
         return false;
     }
     
-    public void dragTile(float x, float y) {
+    public HashMap createValueMap(float x, float y,int i) {
+    	
+//    	System.out.println("key in hashmap"+i);
+//    	System.out.println("value in hashmap"+getCellIndex(x, y));
+    		int index = getCellIndex(x,y);
+    		//hequationvalue.put(i,getCellIndex(x, y));
+    		hequationvalue.put(i,index);
+  	
+//    		colorChange = "YES";
+//    		
+//    		if (startIndex[0] > index)
+//    		{
+//    			startIndex[0] = index;
+//    		}
+//    		if (startIndex[1] <= index)
+//    		{
+//    			startIndex[1] = index;
+//    		}
+    		
+    		//redrawRow();
+    		//redrawColumn();
+    		
+    		
+    	//System.out.println("here size of hashmap"+hequationvalue.size());
+    	return hequationvalue;
+    }
+    
+    public boolean validatEquation(Set set) {
+    	
+    //	TreeSet ts = new TreeSet(new DescendingComparator());
+		// validation
+    	Iterator it = set.iterator();
+    	
+		while(it.hasNext()){
+			
+			Integer v = (Integer) it.next();
+			System.out.println("value of v" + v);
+            
+			System.out.println("value of value" + tTiles[v.intValue()].mNumber);
+           } //while
+		List<Integer> list = new ArrayList<Integer>(set);
+		
+		int a = list.get(0);
+		int b = list.get(1);
+		int c = list.get(2);
+		int d = list.get(3);
+		int e = list.get(4);
+	    
+		
+//		tTiles[a].setmColor(Color.GREEN);
+//		tTiles[b].setmColor(Color.GREEN);
+//		tTiles[c].setmColor(Color.GREEN);
+//		tTiles[d].setmColor(Color.GREEN);
+//		tTiles[e].setmColor(Color.GREEN);
+		
+		//if (bool == true)
+//		{
+//			int x= ((startIndex[0] % 5)*64);
+//			int y = header + (( startIndex[0]/ 5)*64);
+//			int x1 = ((startIndex[1] % 5)+1) *64;
+//			int y1 = header+ ((startIndex[1]/5)+1)*64;
+//			System.out.println("[X,Y]"+x+y+"[x1,y1]"+x1+y1);
+//			recx = x;
+//			recy=y;
+//			recx1=x1;
+//			recy1=y1;
+//			invalidate(x,y,x1,y1);
+//		}
+		
+		System.out.println("value of value A::::" + tTiles[a].mNumber);
+		System.out.println("value of value B::::" + tTiles[b].mNumber);
+		System.out.println("value of value C::::" + tTiles[c].mNumber);
+		System.out.println("value of value D::::" + tTiles[d].mNumber);
+		System.out.println("value of value E::::" + tTiles[e].mNumber);
+		boolean bool = validateEquation(a,b,c,d,e);
+		System.out.println("bool:::::"+bool);
+		
+		
+		
+		return bool;
+
+    }
+    public boolean validateEquation(int a,int b,int c,int d,int e)  {
+
+    	
+		String[] arrayOfIndx = {Integer.toString(tTiles[a].mNumber),Integer.toString(tTiles[b].mNumber),Integer.toString(tTiles[c].mNumber)
+				,Integer.toString(tTiles[d].mNumber),Integer.toString(tTiles[e].mNumber)};
+        int operValue =0;
+        String regexp1 = "[0-9]";
+        String regexp2 = "[60502040]";
+
+        if (arrayOfIndx[3].equals("40") || arrayOfIndx[1].equals("40"))
+        		operValue =1;
+        else if (arrayOfIndx[3].equals("60") || arrayOfIndx[1].equals("60"))
+        		operValue =2;
+        else if (arrayOfIndx[3].equals("50") || arrayOfIndx[1].equals("50")) 
+        		operValue =3;
+        
+    	System.out.println("operValue " + operValue);
+    	
+    	System.out.println("eq 1 " + arrayOfIndx[1].equals("20"));
+    	System.out.println("eq 2 " + arrayOfIndx[3].equals("20"));
+    	System.out.println("eq 1 ==" + arrayOfIndx[1] == "20");
+    	System.out.println("eq 2 ==" + arrayOfIndx[3] == "20");
+    	System.out.println("eq 3 " + arrayOfIndx[0].matches(regexp1));
+    	System.out.println("eq 4 " + arrayOfIndx[2].matches(regexp1));
+    	System.out.println("eq 5 " + arrayOfIndx[4].matches(regexp1));
+    	System.out.println("eq 6 " + arrayOfIndx[3].matches(regexp2));
+    	System.out.println("eq 7 " + arrayOfIndx[1].matches(regexp2));
+    	
+        if ( arrayOfIndx[1].equals("20") && (arrayOfIndx[3].equals("40") || arrayOfIndx[3].equals("50") || arrayOfIndx[3].equals("60")) 
+        		&& arrayOfIndx[0].matches(regexp1) && arrayOfIndx[2].matches(regexp1) && arrayOfIndx[4].matches(regexp1))
+        {
+        	System.out.println("inside 1 if ");
+        	switch(operValue){
+
+      			case 1: {
+
+      						if (Integer.parseInt(arrayOfIndx[0]) == Integer.parseInt(arrayOfIndx[2]) + Integer.parseInt(arrayOfIndx[4]))
+
+      					    	System.out.println("1 Eq is valid");
+      							
+      							return true;
+
+      			}
+      			case 2: {
+
+  							if (Integer.parseInt(arrayOfIndx[0]) == Integer.parseInt(arrayOfIndx[2]) * Integer.parseInt(arrayOfIndx[4]))
+
+      							System.out.println("2 Eq is valid");
+
+  								return true;
+
+      			}
+      			case 3: {
+
+      						if (Integer.parseInt(arrayOfIndx[0]) == Integer.parseInt(arrayOfIndx[2]) - Integer.parseInt(arrayOfIndx[4]))
+
+  								System.out.println("3 Eq is valid");
+
+      							return true;
+
+      			}
+
+      		}
+
+      	}
+        
+       else if ( arrayOfIndx[3].equals("20") && (arrayOfIndx[1].equals("40") || arrayOfIndx[1].equals("50") || arrayOfIndx[1].equals("60"))
+    		   && arrayOfIndx[0].matches(regexp1) && arrayOfIndx[2].matches(regexp1) && arrayOfIndx[4].matches(regexp1))
+  	{
+       	System.out.println("inside 2 if ");
+
+      	switch(operValue)
+  		{
+  			case 1: {
+
+  						if (Integer.parseInt(arrayOfIndx[4]) == Integer.parseInt(arrayOfIndx[0]) + Integer.parseInt(arrayOfIndx[2]))
+
+  					    	System.out.println("Eq is valid");
+
+  							return true;
+
+  						}
+  			case 2: {
+
+  						if (Integer.parseInt(arrayOfIndx[4]) == Integer.parseInt(arrayOfIndx[0]) * Integer.parseInt(arrayOfIndx[2]))
+
+  							System.out.println("Eq is valid");
+
+  							return true;
+
+
+
+
+  						}
+  			case 3: {
+
+  						if (Integer.parseInt(arrayOfIndx[4]) == Integer.parseInt(arrayOfIndx[0]) - Integer.parseInt(arrayOfIndx[2]))
+
+  							System.out.println("Eq is valid");
+  							return true;
+  						}
+
+  		}
+
+  	}    
+
+       else 
+
+  			System.out.println("Eq is invalid");
+
+       		return false;
+
+
+
+
+      }
+ 
+
+    @SuppressWarnings("unchecked")
+	public void dragTile(float x, float y) {
+    	
+    	
         if (isSelected < 0)
             return;
         

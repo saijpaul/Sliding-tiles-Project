@@ -3,7 +3,23 @@ package com.softengg;
 public class Tile 
  
 {
-        public int mColor;
+        public int getmColor() {
+		return mColor;
+	}
+
+	public void setmColor(int mColor) {
+		this.mColor = mColor;
+	}
+
+	public int getmNumber() {
+		return mNumber;
+	}
+
+	public void setmNumber(int mNumber) {
+		this.mNumber = mNumber;
+	}
+
+		public int mColor;
         public int mNumber;
         
      
