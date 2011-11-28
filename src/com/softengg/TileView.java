@@ -262,7 +262,7 @@ private void fillRandomVals(int op, int count)
         float tileWidth = getTileWidth();
         float tileHeight = getTileHeight();
         
-    	        for (int index = 0; index < tSizeSqr; ++index) {
+    	for (int index = 0; index < tSizeSqr; ++index) {
                     int i = index / tSize;
                     int j = index % tSize;
                     float x = tileWidth * j;
@@ -289,12 +289,28 @@ private void fillRandomVals(int op, int count)
                             }
                         }
                         
-                tPaint.setColor(Color.CYAN);
-                canvas.drawRect(x, y, x + tileWidth, y + tileHeight, tPaint);
-                tPaint.setColor(Color.BLACK);	
+                //tPaint.setColor(Color.CYAN);
+                if(index % 2 == 0 )
+                {
+                	tPaint.setColor(0xFFF5DEB3);
+                	canvas.drawRect(x, y, x + tileWidth, y + tileHeight, tPaint);
+                    //tPaint.setColor(0xFF527A7A);
+                	  tPaint.setColor(0xFF53537C);
+                }
+                else
+                {
+                	//tPaint.setColor(0xFFD2B48C);
+                	tPaint.setColor(0xFF9B5C3D);
+                	canvas.drawRect(x, y, x + tileWidth, y + tileHeight, tPaint);
+                   // tPaint.setColor(0xFFBFE843);
+                	 tPaint.setColor(0xFFFF9900);
+                }
+                	
                 
-                tPaint.setTextSize(20);
-                tPaint.setTypeface(Typeface.MONOSPACE);
+                tPaint.setTextSize(32);
+                tPaint.setTypeface(Typeface.DEFAULT_BOLD);
+              //Drop shadow to make numbers and borders stand out
+                tPaint.setShadowLayer(SHADOW_RADIUS, 1, 1, 0xff000000);
                 
                 switch (tTiles[index].mNumber)
                 {
@@ -316,10 +332,9 @@ private void fillRandomVals(int op, int count)
 	                default : {
 	                		canvas.drawText("1" , x+30, y+40, tPaint); 
 	                		tTiles[index].mNumber= 1; break;} 
-                }
+                }//switch
                                 
-            //Drop shadow to make numbers and borders stand out
-            tPaint.setShadowLayer(SHADOW_RADIUS, 1, 1, 0xff000000);
+            
             
           
             //Draw the outline
@@ -332,15 +347,17 @@ private void fillRandomVals(int op, int count)
                     x2, y, x2, y2,
                     x, y2, x2, y2
                 };
-          //      tPaint.setColor(mOutlineColor);
+               // tPaint.setColor(Color.WHITE);
+                tPaint.setColor(0xffcd8539);
                 canvas.drawLines(lines, tPaint);
             //}
             
             // remove shadow layer for perfomance
             tPaint.setShadowLayer(0, 0, 0, 0);
-        }
+        
+    	} // for loop
     
-    }
+    } //ondraw
             
     private int getCellIndex(float x, float y) {
         float tileWidth = getTileWidth();
@@ -524,7 +541,7 @@ private void fillRandomVals(int op, int count)
     }
     
     public boolean validatEquation(Set set) {
-    	
+    	boolean bool;
     //	TreeSet ts = new TreeSet(new DescendingComparator());
 		// validation
     	Iterator it = set.iterator();
@@ -532,9 +549,9 @@ private void fillRandomVals(int op, int count)
 		while(it.hasNext()){
 			
 			Integer v = (Integer) it.next();
-			System.out.println("value of v" + v);
-            
-			System.out.println("value of value" + tTiles[v.intValue()].mNumber);
+//			System.out.println("value of v" + v);
+//            
+//			System.out.println("value of value" + tTiles[v.intValue()].mNumber);
            } //while
 		List<Integer> list = new ArrayList<Integer>(set);
 		
@@ -565,12 +582,24 @@ private void fillRandomVals(int op, int count)
 //			invalidate(x,y,x1,y1);
 //		}
 		
-		System.out.println("value of value A::::" + tTiles[a].mNumber);
-		System.out.println("value of value B::::" + tTiles[b].mNumber);
-		System.out.println("value of value C::::" + tTiles[c].mNumber);
-		System.out.println("value of value D::::" + tTiles[d].mNumber);
-		System.out.println("value of value E::::" + tTiles[e].mNumber);
-		boolean bool = validateEquation(a,b,c,d,e);
+		System.out.println("value of value A::::" + tTiles[a]);
+		System.out.println("value of value B::::" + tTiles[b]);
+		System.out.println("value of value C::::" + tTiles[c]);
+		System.out.println("value of value D::::" + tTiles[d]);
+		System.out.println("value of value E::::" + tTiles[e]);
+		if((tTiles[a]!= null && !tTiles[a].equals(null) && !tTiles[a].equals("null"))
+			&& (tTiles[b]!= null && !tTiles[b].equals(null) && !tTiles[b].equals("null")) && (tTiles[c]!= null && !tTiles[c].equals(null) && !tTiles[c].equals("null"))
+			&&	(tTiles[d]!= null && !tTiles[d].equals(null) && !tTiles[d].equals("null"))){
+			System.out.println("value of value A::::" + tTiles[a].mNumber);
+			System.out.println("value of value B::::" + tTiles[b].mNumber);
+			System.out.println("value of value C::::" + tTiles[c].mNumber);
+			System.out.println("value of value D::::" + tTiles[d].mNumber);
+			System.out.println("value of value E::::" + tTiles[e].mNumber);
+		 bool = validateEquation(a,b,c,d,e);
+		}
+		else{
+			bool = false;
+		}
 		System.out.println("bool:::::"+bool);
 		
 		
@@ -614,29 +643,29 @@ private void fillRandomVals(int op, int count)
 
       			case 1: {
 
-      						if (Integer.parseInt(arrayOfIndx[0]) == Integer.parseInt(arrayOfIndx[2]) + Integer.parseInt(arrayOfIndx[4]))
+      						if (Integer.parseInt(arrayOfIndx[0]) == Integer.parseInt(arrayOfIndx[2]) + Integer.parseInt(arrayOfIndx[4])){
 
       					    	System.out.println("1 Eq is valid");
       							
-      							return true;
+      							return true;}
 
       			}
       			case 2: {
 
-  							if (Integer.parseInt(arrayOfIndx[0]) == Integer.parseInt(arrayOfIndx[2]) * Integer.parseInt(arrayOfIndx[4]))
+  							if (Integer.parseInt(arrayOfIndx[0]) == Integer.parseInt(arrayOfIndx[2]) * Integer.parseInt(arrayOfIndx[4])){
 
       							System.out.println("2 Eq is valid");
 
-  								return true;
+  								return true;}
 
       			}
       			case 3: {
 
-      						if (Integer.parseInt(arrayOfIndx[0]) == Integer.parseInt(arrayOfIndx[2]) - Integer.parseInt(arrayOfIndx[4]))
+      						if (Integer.parseInt(arrayOfIndx[0]) == Integer.parseInt(arrayOfIndx[4]) - Integer.parseInt(arrayOfIndx[2])){
 
   								System.out.println("3 Eq is valid");
 
-      							return true;
+      							return true;}
 
       			}
 
@@ -648,37 +677,37 @@ private void fillRandomVals(int op, int count)
     		   && arrayOfIndx[0].matches(regexp1) && arrayOfIndx[2].matches(regexp1) && arrayOfIndx[4].matches(regexp1))
   	{
        	System.out.println("inside 2 if ");
-
+       	System.out.println("operator value"+operValue);
       	switch(operValue)
   		{
   			case 1: {
 
-  						if (Integer.parseInt(arrayOfIndx[4]) == Integer.parseInt(arrayOfIndx[0]) + Integer.parseInt(arrayOfIndx[2]))
+  						if (Integer.parseInt(arrayOfIndx[4]) == Integer.parseInt(arrayOfIndx[0]) + Integer.parseInt(arrayOfIndx[2])){
 
   					    	System.out.println("Eq is valid");
 
   							return true;
-
+  						}
   						}
   			case 2: {
 
-  						if (Integer.parseInt(arrayOfIndx[4]) == Integer.parseInt(arrayOfIndx[0]) * Integer.parseInt(arrayOfIndx[2]))
+  						if (Integer.parseInt(arrayOfIndx[4]) == Integer.parseInt(arrayOfIndx[0]) * Integer.parseInt(arrayOfIndx[2])){
 
   							System.out.println("Eq is valid");
 
   							return true;
-
+  						}
 
 
 
   						}
   			case 3: {
 
-  						if (Integer.parseInt(arrayOfIndx[4]) == Integer.parseInt(arrayOfIndx[0]) - Integer.parseInt(arrayOfIndx[2]))
+  						if (Integer.parseInt(arrayOfIndx[4]) == Integer.parseInt(arrayOfIndx[0]) - Integer.parseInt(arrayOfIndx[2])){
 
   							System.out.println("Eq is valid");
   							return true;
-  						}
+  						}}
 
   		}
 

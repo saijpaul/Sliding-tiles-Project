@@ -4,6 +4,7 @@
 
 package com.softengg;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,10 +13,14 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import android.app.Activity	;
+import android.app.Activity        ;
 
 import android.view.MotionEvent;
 import android.view.View;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
+import android.media.SoundPool.OnLoadCompleteListener;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,8 +31,20 @@ public class EquationBoardActivity extends Activity   {
 	private ImageView imageHome = null;
     private TileView puzzleTileView;
     private TextView textViewToChange;
+    private ImageView imageThumbsUp = null;
+	private ImageView imageThumbsDown = null;
     //private int i=0;
 
+	private static SoundPool sounds;
+    private static SoundPool thumbsDown;
+    private static int select;
+    private static int thumbs;
+    private static int next;
+    private static MediaPlayer music;
+    private static boolean sound = false;
+    private static boolean soundLoad = false;
+    private static boolean thumbsLoad = false;
+    
   /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle bundle) {
@@ -44,7 +61,13 @@ public class EquationBoardActivity extends Activity   {
          } 
         //shows home icon on puzzle page to go back
         this.imageHome = (ImageView) this.findViewById(R.id.imageHome);
+        this.imageThumbsDown = (ImageView) this.findViewById(R.id.imagethumbsdown);
+        this.imageThumbsUp = (ImageView) this.findViewById(R.id.imagethumbsup);
+        imageThumbsUp.setVisibility(View.INVISIBLE);
+        imageThumbsDown.setVisibility(View.INVISIBLE);
+        
         imageHome.setOnClickListener(myListener);
+        loadSound();
      }
     View.OnClickListener myListener = new View.OnClickListener(){
         public void  onClick  (View  v){
@@ -62,6 +85,40 @@ public class EquationBoardActivity extends Activity   {
     private HashMap hmm = new HashMap();
     private Set s = new LinkedHashSet();
     private int score = 0;
+    
+    public void loadSound()
+    {
+            System.out.println("Test...dundf");
+            sounds = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
+            thumbsDown = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
+            try {
+                    select = sounds.load(getAssets().openFd("low.wav"),1);
+                    thumbs = thumbsDown.load(getAssets().openFd("EXPLODE.WAV"), 1);
+
+            } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+            }
+            sounds.setOnLoadCompleteListener(new OnLoadCompleteListener(){
+                    @Override
+                    public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+                            soundLoad = true;
+            }
+                    });
+
+            thumbsDown.setOnLoadCompleteListener(new OnLoadCompleteListener(){
+                    @Override
+                    public void onLoadComplete(SoundPool soundPool, int sampleId,
+int status) {
+                            thumbsLoad = true;
+                    }
+                    });
+
+
+//           sounds.setVolume(select, 100, 100);
+    }
+    
+    
    // private List l = new ArrayList();
     //move tiles using touch
     @Override public boolean onTouchEvent(MotionEvent event) {
@@ -106,8 +163,8 @@ public class EquationBoardActivity extends Activity   {
             		for(int i=0; i<hmm.size();i++){
 //            			System.out.println(hmm.get(i));
 //            			System.out.println(s.add(hmm.get(i)));
-            			if(hmm.get(i)!=null){
-            			s.add(hmm.get(i));
+            			 if(hmm.get(i)!=null && hmm.get(i)!= "null" && !hmm.get(i).equals(null) && !hmm.get(i).equals("null")){            		
+            				s.add(hmm.get(i));
             		}
                         //if(s.add(hmm.get(i))){
      //                     System.out.println("Duplicate detected : " + hmm.get(i));}
@@ -133,16 +190,32 @@ public class EquationBoardActivity extends Activity   {
                 		boolean bool = puzzleTileView.validatEquation(s);
                 		
                 		if(bool == true){
+                		this.imageThumbsUp = (ImageView) this.findViewById(R.id.imagethumbsup);
+                		imageThumbsUp.setVisibility(View.VISIBLE);
+                		this.imageThumbsDown = (ImageView) this.findViewById(R.id.imagethumbsdown);
+                		imageThumbsDown.setVisibility(View.INVISIBLE);
                 		score = score +5;
                 		Toast.makeText(this, "HURRAY! Your equation is correct", Toast.LENGTH_SHORT).show();
                 		textViewToChange = (TextView) findViewById(R.id.scoreLabel);
                 		textViewToChange.setText("Score:"+score);
+                		if (soundLoad)
+                        {        sounds.play(select, 5, 5, 1, 0, 1);
+                        }
+                		
                 		}
                 		else{ // jus added for checking need to remove later
+                			this.imageThumbsDown = (ImageView) this.findViewById(R.id.imagethumbsdown);
+                    		imageThumbsDown.setVisibility(View.VISIBLE);
+                    		this.imageThumbsUp = (ImageView) this.findViewById(R.id.imagethumbsup);
+                    		imageThumbsUp.setVisibility(View.INVISIBLE);
                 			score = score +0;
                 			Toast.makeText(this, "OOPS! Try Again", Toast.LENGTH_SHORT).show();
                 			textViewToChange = (TextView) findViewById(R.id.scoreLabel);
                     		textViewToChange.setText("Score: "+score);
+                    		if (thumbsLoad)
+                            {
+                                    thumbsDown.play(thumbs, 5, 5, 1, 0, 1);
+                            }
                 		}
                 		System.out.println("scoring"+score);
                 		

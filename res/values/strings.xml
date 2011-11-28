@@ -2,4 +2,11 @@
 <resources>
     <string name="hello">Hello World, SlidingTilePuzzleActivity!</string>
     <string name="app_name">SlidingTilePuzzle</string>
+    <string name="grid_size">Change Puzzle Size</string>    
+    <string-array name="grid_size"> 
+    <item>2x2</item>        
+     <item>3x3</item>        
+     <item>4x4</item>        
+     <item>5x5</item>       
+    </string-array>
 </resources>

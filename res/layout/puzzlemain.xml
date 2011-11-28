@@ -6,29 +6,35 @@ Author: Seema Saijpaul, Pratibha Natani, Neeraja Budamagunta, Maxwell A. Garvey
     android:background="@drawable/back" android:layout_height="fill_parent"
     android:layout_width="fill_parent" android:padding="30dip"
     android:orientation="horizontal">
-<LinearLayout android:orientation="vertical"
+<LinearLayout android:orientation="vertical" android:id="@+id/lay1"
         android:layout_height="wrap_content" android:layout_width="fill_parent"
         android:layout_gravity="bottom">
    
    <TableRow android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/tableRow1" android:gravity="bottom"> 
-   	<ImageView
-  	  android:id="@+id/imageEquation"
-	  android:layout_width="130dip"
-	  android:layout_height="90dip"  android:src="@drawable/equationbutton" android:layout_gravity="bottom"/>
+   	
 
-	<ImageView
-  	  android:id="@+id/imagePuzzle"
-	  android:layout_width="100dip" android:layout_marginLeft="10dip"
-	  android:layout_height="90dip"  android:src="@drawable/puzzlebutton"/>
-	</TableRow>
-	<TableRow android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_marginLeft="70dip"  android:layout_marginTop="5dip"
-	android:id="@+id/tableRow2" android:gravity="bottom"> 
-   	<ImageView
-  	  android:id="@+id/imageHelp"
-	  android:layout_width="40dip"
-	  android:layout_height="40dip"  android:layout_marginLeft="150dip"
-	  android:src="@drawable/helpbutton" />
+<com.softengg.GifDecoderView
+            android:id="@+id/imageEquation"
+            android:layout_width="fill_parent" 
+            android:layout_height="fill_parent"
+            
+            android:focusableInTouchMode="true">
+            
+            
+            
+            </com.softengg.GifDecoderView>
 
+<com.softengg.GifDecoderView
+            android:id="@+id/imagePuzzle"
+            android:layout_width="fill_parent" 
+            android:layout_height="fill_parent"
+            
+            android:focusableInTouchMode="true">
+            
+            
+            
+            </com.softengg.GifDecoderView>
+	
 	</TableRow>
-</LinearLayout>
+	</LinearLayout>
 </LinearLayout>
